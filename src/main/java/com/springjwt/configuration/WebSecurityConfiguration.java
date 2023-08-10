@@ -29,7 +29,7 @@ public class WebSecurityConfiguration {
                 .authorizeHttpRequests()
                 .requestMatchers("/authenticate", "/sign-in").permitAll()
                 .and()
-                .authorizeHttpRequests().requestMatchers("/api/**")
+                .authorizeHttpRequests().requestMatchers("/sunbase/portal/api/**")
                 .authenticated().and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

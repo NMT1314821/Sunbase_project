@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.springjwt.entities.Customer;
+import com.springjwt.exception.ResourceNotFoundException;
 import com.springjwt.repositories.CustomerRepository;
 import com.springjwt.services.auth.CustomerService;
 
@@ -35,13 +36,18 @@ public class CustomerServiceImpl implements CustomerService
 	@Override
 	public void deleteCustomerById(Long cid) 
 	{
+		Customer ecustomer=customerRepo.findById(cid).orElseThrow(
+				()->new ResourceNotFoundException("Customer","id",cid)
+				);
 		customerRepo.deleteById(cid);		
 	}
 
 	@Override
 	public Customer updateCustomer(Customer customer) 
 	{
-		Customer ecustomer=customerRepo.findById(customer.getId()).get();
+		Customer ecustomer=customerRepo.findById(customer.getId()).orElseThrow(
+				()->new ResourceNotFoundException("Customer","id",customer.getId())
+				);
 		ecustomer.setFirst_name(customer.getFirst_name());
 		ecustomer.setLast_name(customer.getLast_name());
 		ecustomer.setStreet(customer.getStreet());
